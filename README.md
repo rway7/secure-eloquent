@@ -34,13 +34,26 @@ class Post extends Model
 }
 ~~~
 
+Finally, add a `is_secured` column to your table:
+
+~~~php
+Schema::create('posts', function (Blueprint $table) {
+    // ...
+    $table->boolean('is_secured')->default(false);
+});
+~~~
+
 ## Getting Started
 
 Once a model has added the `HasSecrets` trait, you can use the `secure` and `unsecure` method:
 
 The `secure` and `unsecure` method will only affect the attributes that are specified in `$secrets` 
-property:
+property.
 
+The `secure` and `unsecure` method will also update the `is_secured` attribute,
+There's also a method called `secured` which allows you to determine whether this model is encrypted.
+
+Example:
 ~~~php
 // Make a new post.
 $post = new Post([
@@ -52,14 +65,18 @@ $post = new Post([
 $post->secure('encryption-key');
 $post->save();
 
-$post->title;   // eyJpdiI6IndFTWFZTUNDT2t...
-$post->body;    // eyJpdiI6IkJ4ZThwNE4zSWd...
+$post->title;       // eyJpdiI6IndFTWFZTUNDT2t...
+$post->body;        // eyJpdiI6IkJ4ZThwNE4zSWd...
+$post->is_secured;  // true
+$post->secured();   // true
 
 // Decrypt the post.
 $post->unsecure('encryption-key');
 
-$post->title;   // Title
-$post->body;    // Body
+$post->title;       // Title
+$post->body;        // Body
+$post->is_secured;  // false
+$post->secured();   // false
 ~~~
 
-> If you `save` the model when it's unsecured, it WILL NOT be encrypted when save to the database.
+> Note: If you `save` the model when it's unsecured, it WILL NOT be encrypted when save to the database.

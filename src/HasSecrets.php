@@ -5,6 +5,16 @@ namespace rway7\SecureEloquent;
 trait HasSecrets
 {
     /**
+     * Determine if this model is encrypted.
+     *
+     * @return bool
+     */
+    public function secured()
+    {
+        return $this->is_secured;
+    }
+
+    /**
      * Encrypt the model with the given key.
      *
      * @param string $key
