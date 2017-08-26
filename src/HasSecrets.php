@@ -5,13 +5,6 @@ namespace rway7\SecureEloquent;
 trait HasSecrets
 {
     /**
-     * The attributes that need to be encrypted.
-     *
-     * @var array
-     */
-    protected $secrets = [];
-
-    /**
      * Encrypt the model with the given key.
      *
      * @param string $key
@@ -20,7 +13,7 @@ trait HasSecrets
      */
     public function secure($key)
     {
-        foreach ($this->secrets as $secret) {
+        foreach ($this->secrets ?: [] as $secret) {
             $this->attributes[$secret] = $this->encrypter($key)->encryptString($this->attributes[$secret]);
         }
 
@@ -36,7 +29,7 @@ trait HasSecrets
      */
     public function unsecure($key)
     {
-        foreach ($this->secrets as $secret) {
+        foreach ($this->secrets ?: [] as $secret) {
             $this->attributes[$secret] = $this->encrypter($key)->decryptString($this->attributes[$secret]);
         }
 
