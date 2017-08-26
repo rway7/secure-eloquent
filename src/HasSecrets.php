@@ -27,6 +27,8 @@ trait HasSecrets
             $this->attributes[$secret] = $this->encrypter($key)->encryptString($this->attributes[$secret]);
         }
 
+        $this->is_secured = true;
+
         return $this;
     }
 
@@ -42,6 +44,8 @@ trait HasSecrets
         foreach ($this->secrets ?: [] as $secret) {
             $this->attributes[$secret] = $this->encrypter($key)->decryptString($this->attributes[$secret]);
         }
+
+        $this->is_secured = false;
 
         return $this;
     }
