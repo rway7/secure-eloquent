@@ -1,0 +1,27 @@
+{
+    "name": "rway7/secure-eloquent",
+    "description": "Encrypt your Eloquent model by user-provide key (with AES-128-CBC algorithm).",
+    "keywords": ["encryption", "privacy", "orm", "laravel", "eloquent", "protection"],
+    "homepage": "https://github.com/rway7/secure-eloquent",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Richard Way",
+            "email": "richardway77@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6.0",
+        "illuminate/support": "~5.4",
+        "illuminate/encryption": "^5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "rway7\\SecureEloquent\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
