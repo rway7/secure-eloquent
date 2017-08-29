@@ -49,12 +49,12 @@ Once a model has added the `HasSecrets` trait, you can use the `secure` and `uns
 
 The `secure` and `unsecure` method will only affect the attributes that are specified in `$secrets` 
 property.
-
-The `secure` and `unsecure` method will also update the `is_secured` attribute,
+These method will also update the `is_secured` attribute,
 There's also a method called `secured` which allows you to determine whether this model is encrypted.
 
 Example:
 ~~~php
+
 // Make a new post.
 $post = new Post([
     'title' => 'Title',
