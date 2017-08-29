@@ -7,11 +7,11 @@ Encrypt your Eloquent model by user-provide key (with AES-128-CBC algorithm).
 To get started, install `secure-eloquent` via Composer:
 
     composer require rway7/secure-eloquent
-    
+
 Next, add the `rway7\SecureEloquent\HasSecrets` trait to the model you want to encrypt.
 This trait will give you the ability to encrypt specified attributes:
 
-~~~php
+```php
 <?php
 
 namespace App;
@@ -22,61 +22,63 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasSecrets;
-    
+
     /**
-     * The attributes that need to be encrypted.  
-     * 
-     * @var array 
+     * The attributes that need to be encrypted.
+     *
+     * @var array
      */
     protected $secrets = [
         'title', 'body',
     ];
 }
-~~~
+```
 
 Finally, add a `is_secured` column to your table:
 
-~~~php
+```php
 Schema::create('posts', function (Blueprint $table) {
     // ...
     $table->boolean('is_secured')->default(false);
 });
-~~~
+```
 
 ## Getting Started
 
-Once a model has added the `HasSecrets` trait, you can use the `secure` and `unsecure` method:
+Once a model has added that trait, you will be able to use `secure` and `unsecure` methods.
 
-The `secure` and `unsecure` method will only affect the attributes that are specified in `$secrets` 
-property.
-These method will also update the `is_secured` attribute,
-There's also a method called `secured` which allows you to determine whether this model is encrypted.
+These methods will only affect the attributes that are specified in `$secrets`
+property, and it will update the model's `is_secured` attribute to indicates whether the model is encrypted.
 
-Example:
-~~~php
+#### Encrypt a model
 
-// Make a new post.
-$post = new Post([
-    'title' => 'Title',
-    'body' => 'Body',
-]);
+Once a model has added the `HasSecrets` trait, you can use the `secure` method to encrypt:
 
-// Encrypt and save the post.
+```php
 $post->secure('encryption-key');
+
+$post->title;   // eyJpdiI6IndFTWFZTU...
+$post->body;    // eyJpdiI6IkJ4ZThwNE...
+
 $post->save();
+```
 
-$post->title;       // eyJpdiI6IndFTWFZTUNDT2t...
-$post->body;        // eyJpdiI6IkJ4ZThwNE4zSWd...
-$post->is_secured;  // true
-$post->secured();   // true
+> Note: It's not secure to `save` a model that hasn't been encrypted with `secure` method.
 
-// Decrypt the post.
+#### Decrypt a model
+
+```php
 $post->unsecure('encryption-key');
 
-$post->title;       // Title
-$post->body;        // Body
-$post->is_secured;  // false
-$post->secured();   // false
-~~~
+$post->title;   // Title
+$post->body;    // Body
+```
 
-> Note: If you `save` the model when it's unsecured, it WILL NOT be encrypted when save to the database.
+#### Determine if a model is encrypted
+
+There's also a `secured` method let you determine if that model is encrypted:
+
+```php
+$post->secured();   // true
+```
+
