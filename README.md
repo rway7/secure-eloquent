@@ -54,6 +54,7 @@ There's also a method called `secured` which allows you to determine whether thi
 
 Example:
 ~~~php
+
 // Make a new post.
 $post = new Post([
     'title' => 'Title',
