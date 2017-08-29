@@ -52,8 +52,6 @@ property, and it will update the model's `is_secured` attribute to indicates whe
 
 #### Encrypt a model
 
-Once a model has added the `HasSecrets` trait, you can use the `secure` method to encrypt:
-
 ```php
 $post->secure('encryption-key');
 
@@ -63,7 +61,7 @@ $post->body;    // eyJpdiI6IkJ4ZThwNE...
 $post->save();
 ```
 
-> Note: It's not secure to `save` a model that hasn't been encrypted with `secure` method.
+> Note: It WILL NOT be encrypted if you `save` a model wihtout calling the `secure` method.
 
 #### Decrypt a model
 
