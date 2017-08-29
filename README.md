@@ -74,8 +74,6 @@ $post->body;    // Body
 
 #### Determine if a model is encrypted
 
-There's also a `secured` method let you determine if that model is encrypted:
-
 ```php
 $post->secured();   // true
 ```
