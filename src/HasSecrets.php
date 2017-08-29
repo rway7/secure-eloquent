@@ -8,6 +8,7 @@ trait HasSecrets
      * Determine if this model is encrypted.
      *
      * @return bool
+     * @throws \Illuminate\Contracts\Encryption\DecryptException
      */
     public function secured()
     {
@@ -20,6 +21,7 @@ trait HasSecrets
      * @param string $key
      *
      * @return $this
+     * @throws \Illuminate\Contracts\Encryption\DecryptException
      */
     public function secure($key)
     {
@@ -38,6 +40,7 @@ trait HasSecrets
      * @param string $key
      *
      * @return $this
+     * @throws \Illuminate\Contracts\Encryption\DecryptException
      */
     public function unsecure($key)
     {
@@ -55,7 +58,7 @@ trait HasSecrets
      *
      * @param string $key
      *
-     * @return \Illuminate\Encryption\Encrypter
+     * @return \Illuminate\Contracts\Encryption\Encrypter
      */
     protected function encrypter($key)
     {
