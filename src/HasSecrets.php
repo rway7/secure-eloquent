@@ -25,11 +25,7 @@ trait HasSecrets
      */
     public function secure($key)
     {
-        foreach ($this->secrets ?: [] as $secret) {
-            if (! isset($this->attributes[$secret])) {
-                continue;
-            }
-
+        foreach ($this->secretAttributes() as $secret) {
             $this->attributes[$secret] = $this->encrypter($key)->encryptString($this->attributes[$secret]);
         }
 
@@ -48,17 +44,25 @@ trait HasSecrets
      */
     public function unsecure($key)
     {
-        foreach ($this->secrets ?: [] as $secret) {
-            if (! isset($this->attributes[$secret])) {
-                continue;
-            }
-
+        foreach ($this->secretAttributes() as $secret) {
             $this->attributes[$secret] = $this->encrypter($key)->decryptString($this->attributes[$secret]);
         }
 
         $this->is_secured = false;
 
         return $this;
+    }
+
+    /**
+     * Get all the secret attributes name for this model.
+     *
+     * @return array
+     */
+    protected function secretAttributes()
+    {
+        return array_keys(
+            array_only($this->attributes, $this->secrets)
+        );
     }
 
     /**
