@@ -26,6 +26,10 @@ trait HasSecrets
     public function secure($key)
     {
         foreach ($this->secrets ?: [] as $secret) {
+            if (! isset($this->attributes[$secret])) {
+                continue;
+            }
+
             $this->attributes[$secret] = $this->encrypter($key)->encryptString($this->attributes[$secret]);
         }
 
@@ -45,6 +49,10 @@ trait HasSecrets
     public function unsecure($key)
     {
         foreach ($this->secrets ?: [] as $secret) {
+            if (! isset($this->attributes[$secret])) {
+                continue;
+            }
+
             $this->attributes[$secret] = $this->encrypter($key)->decryptString($this->attributes[$secret]);
         }
 
