@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Posts;
+namespace Tests\Feature;
 
 use Illuminate\Database\Eloquent\Model;
 use PHPUnit\Framework\TestCase;
